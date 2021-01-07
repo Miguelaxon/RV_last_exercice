@@ -1,4 +1,4 @@
-package com.crisspian.recyclerviewexamples_01;
+package com.crisspian.recyclerMiguel;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.crisspian.recyclerviewexamples_01.model;
+package com.crisspian.recyclerMiguel.model;
 
 public class Item {
 
