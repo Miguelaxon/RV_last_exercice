@@ -17,24 +17,32 @@ import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ImageViewHolder> {
     private List<Item> lista;
+    private PasarElemento pasarElemento;
 
-    public ItemAdapter(List<Item> returnItemList) {
+    public ItemAdapter(List<Item> returnItemList, PasarElemento pasarElemento) {
         this.lista = returnItemList;
+        this.pasarElemento = pasarElemento;
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView textView;
         private ImageView imageView;
+
         public ImageViewHolder(@NonNull ItemListDataBinding itemBinding){
             super(itemBinding.getRoot());
             textView = itemBinding.tvItem;
             imageView = itemBinding.ivItem;
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
+            pasarElemento.passElement(lista.get(getLayoutPosition()));
         }
+    }
+
+    public interface PasarElemento{
+        void passElement(Item elemento);
     }
 
     @NonNull

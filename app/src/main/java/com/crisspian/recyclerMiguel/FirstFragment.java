@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.crisspian.recyclerMiguel.adapter.ItemAdapter;
@@ -16,7 +17,7 @@ import com.crisspian.recyclerMiguel.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstFragment extends Fragment  {
+public class FirstFragment extends Fragment implements ItemAdapter.PasarElemento {
     private FragmentFirstBinding binding;
     private Bundle bundle = new Bundle();
 
@@ -25,17 +26,17 @@ public class FirstFragment extends Fragment  {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
+
+        ItemAdapter itemAdapter = new ItemAdapter(returnItemList(), this);
+        binding.rvItem.setAdapter(itemAdapter);
+        binding.rvItem.setLayoutManager(new LinearLayoutManager(getContext()));
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ItemAdapter itemAdapter = new ItemAdapter(returnItemList());
-        binding.rvItem.setAdapter(itemAdapter);
-        binding.rvItem.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
-
-
 
     //Generamos un listado de datos del tipo Item.
     private List<Item> returnItemList() {
@@ -67,4 +68,11 @@ public class FirstFragment extends Fragment  {
         return listItem;
     }
 
+    @Override
+    public void passElement(Item elemento) {
+        bundle.putString("itemDescription", elemento.getItemDescription());
+        bundle.putString("itemUrl", elemento.getUrlImage());
+        Navigation.findNavController(binding.getRoot())
+                .navigate(R.id.action_FirstFragment_to_SecondFragment, bundle);
+    }
 }
